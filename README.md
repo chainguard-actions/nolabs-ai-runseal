@@ -1,18 +1,18 @@
-# always-further/runseal
+# nolabs-ai/runseal
 
 Run commands with sealed credentials, L7 filtering, and nono sandbox enforcement
 
-Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/always-further/runseal](https://github.com/always-further/runseal).
+Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at [https://github.com/nolabs-ai/runseal](https://github.com/nolabs-ai/runseal).
 
 ## Versions
 
 | Version | Tag | Upstream commit | Hardening report |
 |---------|-----|-----------------|------------------|
-| v0.2.2 | [`v0.2.2`](https://github.com/chainguard-actions/always-further-runseal/tree/v0.2.2) | [`2d426ba`](https://github.com/always-further/runseal/commit/2d426baddae3d7902e17ebd0daabd7d606e56874) | [`HARDENING.md`](https://github.com/chainguard-actions/always-further-runseal/blob/v0.2.2/HARDENING.md) |
-| v0.3.0 | [`v0.3.0`](https://github.com/chainguard-actions/always-further-runseal/tree/v0.3.0) | [`b796c15`](https://github.com/always-further/runseal/commit/b796c1550c1b39eb65dc90a32596cb78ddd00583) | [`HARDENING.md`](https://github.com/chainguard-actions/always-further-runseal/blob/v0.3.0/HARDENING.md) |
-| v0.3.2 | [`v0.3.2`](https://github.com/chainguard-actions/always-further-runseal/tree/v0.3.2) | [`598b7d1`](https://github.com/always-further/runseal/commit/598b7d10e74126e6d9c09f85b301ecaabb8e5e56) | [`HARDENING.md`](https://github.com/chainguard-actions/always-further-runseal/blob/v0.3.2/HARDENING.md) |
-| v0.3.3 | [`v0.3.3`](https://github.com/chainguard-actions/always-further-runseal/tree/v0.3.3) | [`52e34e0`](https://github.com/always-further/runseal/commit/52e34e0aee4296180d4f80eb85621ca18314f31a) | [`HARDENING.md`](https://github.com/chainguard-actions/always-further-runseal/blob/v0.3.3/HARDENING.md) |
-| v0.3.4 | [`v0.3.4`](https://github.com/chainguard-actions/always-further-runseal/tree/v0.3.4) | [`64a8835`](https://github.com/always-further/runseal/commit/64a88359c3ed9e53220af539c01aa73e35e96b21) | [`HARDENING.md`](https://github.com/chainguard-actions/always-further-runseal/blob/v0.3.4/HARDENING.md) |
+| v0.2.2 | [`v0.2.2`](https://github.com/chainguard-actions/nolabs-ai-runseal/tree/v0.2.2) | [`2d426ba`](https://github.com/nolabs-ai/runseal/commit/2d426baddae3d7902e17ebd0daabd7d606e56874) | [`HARDENING.md`](https://github.com/chainguard-actions/nolabs-ai-runseal/blob/v0.2.2/HARDENING.md) |
+| v0.3.0 | [`v0.3.0`](https://github.com/chainguard-actions/nolabs-ai-runseal/tree/v0.3.0) | [`b796c15`](https://github.com/nolabs-ai/runseal/commit/b796c1550c1b39eb65dc90a32596cb78ddd00583) | [`HARDENING.md`](https://github.com/chainguard-actions/nolabs-ai-runseal/blob/v0.3.0/HARDENING.md) |
+| v0.3.2 | [`v0.3.2`](https://github.com/chainguard-actions/nolabs-ai-runseal/tree/v0.3.2) | [`598b7d1`](https://github.com/nolabs-ai/runseal/commit/598b7d10e74126e6d9c09f85b301ecaabb8e5e56) | [`HARDENING.md`](https://github.com/chainguard-actions/nolabs-ai-runseal/blob/v0.3.2/HARDENING.md) |
+| v0.3.3 | [`v0.3.3`](https://github.com/chainguard-actions/nolabs-ai-runseal/tree/v0.3.3) | [`52e34e0`](https://github.com/nolabs-ai/runseal/commit/52e34e0aee4296180d4f80eb85621ca18314f31a) | [`HARDENING.md`](https://github.com/chainguard-actions/nolabs-ai-runseal/blob/v0.3.3/HARDENING.md) |
+| v0.3.4 | [`v0.3.4`](https://github.com/chainguard-actions/nolabs-ai-runseal/tree/v0.3.4) | [`64a8835`](https://github.com/nolabs-ai/runseal/commit/64a88359c3ed9e53220af539c01aa73e35e96b21) | [`HARDENING.md`](https://github.com/chainguard-actions/nolabs-ai-runseal/blob/v0.3.4/HARDENING.md) |
 
 ## Privacy
 
