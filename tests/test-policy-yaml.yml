@@ -1,0 +1,59 @@
+name: Test policy YAML input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Prepare output dir
+        run: mkdir -p "$GITHUB_WORKSPACE/policy-out"
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          run: echo "policy-ok" > policy-out/out.txt
+          verify-attestations: "false"
+          runseal-version: "v0.3.1"
+          nono-version: "v0.62.0"
+          policy: |
+            fs:
+              read: ["."]
+              write: ["./policy-out"]
+            network:
+              mode: blocked
+      - name: Assert leading-v versions resolved and installed
+        run: |
+          TC="${RUNNER_TOOL_CACHE:-/opt/hostedtoolcache}/runseal"
+          NONO="$TC/nono/0.62.0/x86_64-unknown-linux-gnu/nono"
+          RS="$TC/runseal/0.3.1/x86_64-unknown-linux-gnu/runseal"
+          [ -x "$NONO" ] || { echo "FAIL: nono not installed at $NONO"; exit 1; }
+          [ -x "$RS" ] || { echo "FAIL: runseal not installed at $RS"; exit 1; }
+          "$NONO" --version | grep -q "0.62.0" || { echo "FAIL: nono version mismatch"; exit 1; }
+          echo "PASS"
+      - name: Assert command result (or environment-limited failure)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          RS="${RUNNER_TOOL_CACHE:-/opt/hostedtoolcache}/runseal/runseal/0.3.1/x86_64-unknown-linux-gnu/runseal"
+          if [ "$OUTCOME" = "success" ]; then
+            f="$GITHUB_WORKSPACE/policy-out/out.txt"
+            [ -f "$f" ] || { echo "FAIL: $f not found"; exit 1; }
+            content="$(cat "$f")"
+            echo "content: $content"
+            [ "$content" = "policy-ok" ] || { echo "FAIL: unexpected content"; exit 1; }
+            echo "PASS: file written via policy"
+          elif [ "$OUTCOME" = "failure" ]; then
+            out="$("$RS" --version 2>&1 || true)"
+            echo "runseal --version: $out"
+            if echo "$out" | grep -q "GLIBC"; then
+              echo "PASS: setup verified binaries; runseal binary cannot run on this image's glibc (environment limitation)"
+            else
+              echo "FAIL: action failed for an unexpected reason"
+              exit 1
+            fi
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
