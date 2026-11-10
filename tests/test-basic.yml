@@ -1,4 +1,4 @@
-name: Test basic usage - run a simple command
+name: Test basic usage
 on:
   workflow_dispatch:
 jobs:
@@ -6,13 +6,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: Run simple echo command via runseal
-        id: action
+      - id: action
         uses: .
         with:
-          run: echo hello-from-runseal
-          network: blocked
+          run: echo "hello from runseal sandbox"
           verify-attestations: "false"
-      - name: Assert action completed successfully
+      - name: Assert action succeeded and tools are installed on PATH
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
         run: |
-          echo "PASS: runseal action completed without error"
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" != "success" ]; then
+            echo "FAIL: expected success"
+            exit 1
+          fi
+          if ! command -v runseal >/dev/null 2>&1; then
+            echo "FAIL: runseal not on PATH"
+            exit 1
+          fi
+          if ! command -v nono >/dev/null 2>&1; then
+            echo "FAIL: nono not on PATH"
+            exit 1
+          fi
+          runseal --version
+          nono --version
+          echo "PASS"

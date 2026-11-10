@@ -105,7 +105,7 @@ install_release_binary() {
     local repo="$2"
     local requested_version="$3"
     local target="$4"
-    local version asset url install_dir tarball sums_file
+    local version asset url install_dir tarball sums_file safe_dir
 
     version="$(resolve_version "${repo}" "${requested_version}")"
     asset="${name}-v${version}-${target}.tar.gz"
@@ -116,8 +116,8 @@ install_release_binary() {
 
     if [[ -x "${install_dir}/${name}" ]]; then
         echo "${name} v${version} already installed at ${install_dir}/${name}"
-        printf '%s' "${install_dir}" | tr -d '\n\r' >> "${GITHUB_PATH}"
-        printf '\n' >> "${GITHUB_PATH}"
+        safe_dir="$(printf '%s' "${install_dir}" | tr -d '\n\r')"
+        echo "${safe_dir}" >> "${GITHUB_PATH}"
         export PATH="${install_dir}:${PATH}"
         return
     fi
@@ -134,8 +134,8 @@ install_release_binary() {
         rm -f "${asset}" "SHA256SUMS"
     )
     chmod +x "${install_dir}/${name}"
-    printf '%s' "${install_dir}" | tr -d '\n\r' >> "${GITHUB_PATH}"
-    printf '\n' >> "${GITHUB_PATH}"
+    safe_dir="$(printf '%s' "${install_dir}" | tr -d '\n\r')"
+    echo "${safe_dir}" >> "${GITHUB_PATH}"
     export PATH="${install_dir}:${PATH}"
 }
 
@@ -156,8 +156,8 @@ install_runseal_from_source() {
         cp target/release/runseal "${install_dir}/runseal"
     )
     chmod +x "${install_dir}/runseal"
-    printf '%s' "${install_dir}" | tr -d '\n\r' >> "${GITHUB_PATH}"
-    printf '\n' >> "${GITHUB_PATH}"
+    safe_dir="$(printf '%s' "${install_dir}" | tr -d '\n\r')"
+    echo "${safe_dir}" >> "${GITHUB_PATH}"
     export PATH="${install_dir}:${PATH}"
 }
 

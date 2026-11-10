@@ -1,0 +1,32 @@
+name: Test fs-write allows writing to granted directory
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Prepare output directory
+        run: |
+          rm -rf "$RUNNER_TEMP/runseal-out"
+          mkdir -p "$RUNNER_TEMP/runseal-out"
+      - id: action
+        uses: .
+        with:
+          run: echo "sealed-write-ok" > "${{ runner.temp }}/runseal-out/result.txt"
+          fs-write: ${{ runner.temp }}/runseal-out
+          verify-attestations: "false"
+      - name: Assert file was written by the sandboxed command
+        run: |
+          f="$RUNNER_TEMP/runseal-out/result.txt"
+          if [ ! -f "$f" ]; then
+            echo "FAIL: $f not found"
+            exit 1
+          fi
+          content="$(cat "$f")"
+          echo "content: $content"
+          if [ "$content" != "sealed-write-ok" ]; then
+            echo "FAIL: unexpected content"
+            exit 1
+          fi
+          echo "PASS"
